@@ -14,6 +14,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    private double P;
+    private final double T = 288.15;
+    private final double Po = 1013.25;
+    private double h;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
