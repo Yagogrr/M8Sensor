@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
+
         if (pressureSensor != null) {
             Toast.makeText(this, "TIENES BAROMETRO", Toast.LENGTH_SHORT).show();
         } else {
@@ -35,5 +36,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+    public void calculAlcada(){
+        h = T/0.0065*(1-(Math.pow(P/Po,0.1903)));
     }
 }
