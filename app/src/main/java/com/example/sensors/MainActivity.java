@@ -2,6 +2,8 @@ package com.example.sensors;
 
 import android.content.Context;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -12,7 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
     private double P;
     private final double T = 288.15;
@@ -36,4 +38,16 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onSensorChanged(SensorEvent sr){
+        float preesureValue = sr.values[0];
+        this.P = preesureValue;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sr, int a){
+        return;
+    }
+
 }
