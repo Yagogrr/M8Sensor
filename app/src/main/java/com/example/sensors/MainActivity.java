@@ -36,18 +36,16 @@ public class MainActivity extends AppCompatActivity {
         TextView textPantalla = findViewById(R.id.text);
 
         if (pressureSensor != null) {
-            //hace que vaya cambiando el valor
             sensorManager.registerListener(new SensorEventListener() {
                 @Override
                 public void onSensorChanged(SensorEvent sr) {
                     float P = sr.values[0];
-                    h = T/0.0065*(1-(Math.pow(P/Po,1021.5)));
+                    h = T/0.0065*(1-(Math.pow(P/Po,1026.5)));
                     textPantalla.setText("Alçada: " + String.valueOf(h));
                 }
 
                 @Override
                 public void onAccuracyChanged(Sensor sensor, int accuracy) {
-                    //lo sobreesscribo porque sino peta
                 }
             }, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
