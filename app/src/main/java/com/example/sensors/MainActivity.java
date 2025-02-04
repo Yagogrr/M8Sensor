@@ -15,7 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity {
     private SensorManager sensorManager;
     private Sensor pressureSensor;
     private TextView textPantalla;
@@ -53,14 +53,5 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         } else {
             Toast.makeText(this, "No hay sensor de presión disponible", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent sr) {
-        //hay que sobreescribirlo dos veces porque el AndroidStudio es retrasado
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
 }
