@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //sensorManager que tiene todos los sensors
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        //para la presion atmosferica
+
         Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         TextView textPantalla = findViewById(R.id.text);
 
