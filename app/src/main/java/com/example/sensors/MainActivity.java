@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 @Override
                 public void onSensorChanged(SensorEvent sr) {
                     float P = sr.values[0];
-                    h = T/0.0065*(1-(Math.pow(P/Po, 0.1903)));
+                    h = T/0.0065*(1-(Math.pow(P/Po,1021.5)));
                     textPantalla.setText("Alçada: " + String.valueOf(h));
                 }
 
