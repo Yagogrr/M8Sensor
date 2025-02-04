@@ -19,12 +19,12 @@ public class Podometro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_podometro);
-        TextView tv = findViewById(R.id.tv_passos);
+        TextView tv = findViewById(R.id.passos);
         Button btn = findViewById(R.id.btn_reiniciar);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tv.setText(0);
+                tv.setText("0");
             }
         });
 
