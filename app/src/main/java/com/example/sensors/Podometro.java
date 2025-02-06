@@ -57,7 +57,6 @@ public class Podometro extends AppCompatActivity {
                     float y = sr.values[1];
                     float x = sr.values[2];
 
-                    // Detectar paso cuando hay un movimiento hacia arriba
                     if ((y > 9.5 && !isStep)||(x > 1.5 && !isStep)) {
                         steps++;
                         isStep = true;
