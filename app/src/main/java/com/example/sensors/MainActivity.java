@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         //sensorManager que tiene todos los sensors
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        
 
         Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         TextView textPantalla = findViewById(R.id.text);
