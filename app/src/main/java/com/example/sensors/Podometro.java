@@ -20,7 +20,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Podometro extends AppCompatActivity {
 
-    public int steps = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +46,27 @@ public class Podometro extends AppCompatActivity {
 
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+
         if (accelerometer != null) {
             sensorManager.registerListener(new SensorEventListener() {
+                int steps = 0;
+                boolean isStep = false;
                 @Override
                 public void onSensorChanged(SensorEvent sr) {
-                    tv.setText(String.valueOf(steps));
+                    float y = sr.values[1];
+                    float x = sr.values[2];
+
+                    // Detectar paso cuando hay un movimiento hacia arriba
+                    if ((y > 9.5 && !isStep)||(x > 1.5 && !isStep)) {
+                        steps++;
+                        isStep = true;
+                    }
+                    if ((y < 9.5)&&(x < 1.5)) {
+                        isStep = false;
+                    }
+
+                    tv.setText("Pasos: " + String.valueOf(steps));
                 }
 
                 @Override
@@ -59,7 +74,7 @@ public class Podometro extends AppCompatActivity {
                 }
             }, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
-            Toast.makeText(this, "No hay sensor de presión disponible", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No hay acelerómetro disponible", Toast.LENGTH_SHORT).show();
         }
 
     }
