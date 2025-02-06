@@ -27,13 +27,7 @@ public class Podometro extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_podometro);
         TextView tv = findViewById(R.id.passos);
-        Button btn = findViewById(R.id.btn_reiniciar);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tv.setText("0");
-            }
-        });
+
 
         Button btn2 = findViewById(R.id.btnToaltimetro);
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -47,27 +41,26 @@ public class Podometro extends AppCompatActivity {
         SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        final int[] steps = {0};
 
         if (accelerometer != null) {
             sensorManager.registerListener(new SensorEventListener() {
-                int steps = 0;
                 boolean isStep = false;
                 @Override
                 public void onSensorChanged(SensorEvent sr) {
                     float y = sr.values[1];
                     float x = sr.values[2];
 
-                    // Detectar paso cuando hay un movimiento hacia arriba
                     if ((y > 9.5 && !isStep)||(x > 1.5 && !isStep)) {
-                        steps++;
+                        steps[0]++;
                         isStep = true;
                     }
                     if ((y < 9.5)&&(x < 1.5)) {
                         isStep = false;
                     }
 
-                    tv.setText(String.valueOf(steps));
-                    if(steps==100){
+                    tv.setText(String.valueOf(steps[0]));
+                    if(steps[0] ==100){
                         Toast.makeText(Podometro.this,"Has arribat a 100 passos. Cop a cop, pas a pas, assalt a assetjament",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -79,6 +72,16 @@ public class Podometro extends AppCompatActivity {
         } else {
             Toast.makeText(this, "No hay acelerómetro disponible", Toast.LENGTH_SHORT).show();
         }
+
+        Button buttonReset = findViewById(R.id.btn_reiniciar);
+        buttonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                steps[0] = 0;
+                tv.setText(String.valueOf(steps[0]));
+            }
+        });
+
 
     }
 }
