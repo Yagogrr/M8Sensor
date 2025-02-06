@@ -67,7 +67,7 @@ public class Podometro extends AppCompatActivity {
 
                     tv.setText(String.valueOf(steps));
                     if(steps==100){
-                        Toast.makeText(Podometro.this,"a",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Podometro.this,"Has arribat a 100 passos. Cop a cop, pas a pas, assalt a assetjament",Toast.LENGTH_SHORT).show();
                     }
                 }
 
