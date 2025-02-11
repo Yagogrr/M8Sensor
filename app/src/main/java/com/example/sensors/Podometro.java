@@ -19,7 +19,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class Podometro extends AppCompatActivity {
-
+    private SensorManager sensorManager;
+    private Sensor pressureSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,13 @@ public class Podometro extends AppCompatActivity {
         setContentView(R.layout.activity_podometro);
         TextView tv = findViewById(R.id.passos);
 
+        Button btn = findViewById(R.id.btn_reiniciar);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tv.setText("0");
+            }
+        });
 
         Button btn2 = findViewById(R.id.btnToaltimetro);
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -38,18 +46,18 @@ public class Podometro extends AppCompatActivity {
             }
         });
 
-        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         final int[] steps = {0};
 
-        if (accelerometer != null) {
+        if (pressureSensor != null) {
             sensorManager.registerListener(new SensorEventListener() {
                 boolean isStep = false;
                 @Override
                 public void onSensorChanged(SensorEvent sr) {
                     float y = sr.values[1];
-                    float x = sr.values[2];
+                    float x = sr.values[0];
 
                     if ((y > 9.5 && !isStep)||(x > 1.5 && !isStep)) {
                         steps[0]++;
@@ -64,13 +72,12 @@ public class Podometro extends AppCompatActivity {
                         Toast.makeText(Podometro.this,"Has arribat a 100 passos. Cop a cop, pas a pas, assalt a assetjament",Toast.LENGTH_SHORT).show();
                     }
                 }
-
                 @Override
                 public void onAccuracyChanged(Sensor sensor, int accuracy) {
                 }
-            }, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+            }, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
-            Toast.makeText(this, "No hay acelerómetro disponible", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No hi ha accelerometre disponible", Toast.LENGTH_SHORT).show();
         }
 
         Button buttonReset = findViewById(R.id.btn_reiniciar);

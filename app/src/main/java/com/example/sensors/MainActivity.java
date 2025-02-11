@@ -18,7 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     private SensorManager sensorManager;
     private Sensor pressureSensor;
     private TextView textPantalla;
@@ -33,10 +33,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //sensorManager que tiene todos los sensors
-        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
-        Sensor pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
+        pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
         TextView textPantalla = findViewById(R.id.text);
 
         if (pressureSensor != null) {
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
-            Toast.makeText(this, "No hay sensor de presión disponible", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No hi ha sensor de pressio disponible", Toast.LENGTH_SHORT).show();
         }
 
         Button btn = findViewById(R.id.btn_toPodometro);
