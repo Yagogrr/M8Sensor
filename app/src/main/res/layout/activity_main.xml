@@ -33,18 +33,10 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/reproduir" />
     <Button
-        android:id="@+id/btn_pausar_reproduccio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/btn_reproduir"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="@string/pausar_reproducci" />
-    <Button
         android:id="@+id/btn_sortir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/btn_pausar_reproduccio"
+        app:layout_constraintTop_toBottomOf="@id/btn_reproduir"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/sortir" />
