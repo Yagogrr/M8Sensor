@@ -37,7 +37,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         rutaAudio = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audio.3gp";
-        sortir.setOnClickListener(v -> finish());
+
+        Button btn_reproducir  = findViewById(R.id.btn_reproduir);
+        btn_reproducir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(estaReproduint){
+                    btn_reproducir.setText("Pausar");
+                    reproduir();
+                } else{
+                    btn_reproducir.setText("Reproduir");
+                    pausar();
+                }
+            }
+        });
+
+        Button btn_sortir = findViewById(R.id.btn_sortir);
+        btn_sortir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishAffinity();
+            }
+        });
 
     }
 
