@@ -13,14 +13,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.io.IOException;
 
@@ -28,17 +24,56 @@ public class MainActivity extends AppCompatActivity {
     private MediaRecorder mediaRecorder;
     private MediaPlayer mediaPlayer;
     private String rutaAudio;
-    private boolean estaGravant;
+    private boolean estaGravant = false;
     private boolean estaReproduint = false;
-    private Button iniParaGravacio, reproduir, pausar, sortir;
+    private Button iniParaGravacio, reproduirParar, sortir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        rutaAudio = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audio.3gp";
-        sortir.setOnClickListener(v -> finish());
+        setContentView(R.layout.activity_main);  // Asegúrate de tener el layout correctamente asignado
 
+        rutaAudio = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audio.3gp";
+
+        iniParaGravacio = findViewById(R.id.btn_inici_para);  // Asegúrate de tener este ID en tu XML
+        reproduirParar = findViewById(R.id.btn_reproduir);  // Asegúrate de tener este ID en tu XML
+        sortir = findViewById(R.id.btn_sortir);  // Asegúrate de tener este ID en tu XML
+
+        // Acción para el botón de salir
+        sortir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        // Acción para el botón de iniciar/parar grabación
+        iniParaGravacio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (estaGravant) {
+                    // Detener la grabación si ya está en proceso
+                    stopRecording();
+                } else {
+                    // Iniciar la grabación
+                    comencarGravacio();
+                }
+            }
+        });
+
+        // Acción para el botón de reproducción/pausa
+        reproduirParar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (estaReproduint) {
+                    pausar();
+                } else {
+                    instanciarMediaplayer();
+                    reproduir();
+                }
+            }
+        });
     }
 
     private void comencarGravacio() {
@@ -58,8 +93,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Gravació iniciada!", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Error en iniciar la gravació!", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void stopRecording() {
         if (estaGravant) {
             mediaRecorder.stop();
@@ -69,21 +106,41 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Gravació aturada.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private void instanciarMediaplayer() {
+        mediaPlayer = MediaPlayer.create(this, Uri.parse(rutaAudio));
+    }
+
     private void reproduir() {
         if (!estaReproduint) {
             estaReproduint = true;
             mediaPlayer.start();
+            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    estaReproduint = false;
+                }
+            });
         }
     }
 
     private void pausar() {
         if (estaReproduint) {
             estaReproduint = false;
-            mediaPlayer.stop();
+            mediaPlayer.pause();
         }
     }
 
-    private void instanciarMediaplayer(){
-        mediaPlayer = MediaPlayer.create(this, Uri.parse(rutaAudio));
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        if (mediaRecorder != null) {
+            mediaRecorder.release();
+            mediaRecorder = null;
+        }
     }
 }
