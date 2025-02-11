@@ -5,4 +5,9 @@
     <string name="reiniciar">Reiniciar</string>
     <string name="altimetre">altimetre</string>
     <string name="podometro">podometro</string>
+    <string name="iniciar">Iniciar</string>
+    <string name="reproduir">Reproduir</string>
+    <string name="pausar_reproducci">Pausar reproducció</string>
+    <string name="sortir">Sortir</string>
+    <string name="gravadora">Gravadora</string>
 </resources>
