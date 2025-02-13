@@ -1,16 +1,9 @@
 package com.example.sensors;
 
-import android.content.Context;
-import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -32,13 +25,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);  // Asegúrate de tener el layout correctamente asignado
+        setContentView(R.layout.activity_main); // Asegúrate de tener el layout correctamente asignado
 
-        rutaAudio = Environment.getExternalStorageDirectory().getAbsolutePath() + "/audio.3gp";
+        // Se utiliza el directorio propio de la app para almacenar el audio
+        rutaAudio = getExternalFilesDir(null).getAbsolutePath() + "/audio.3gp";
 
-        iniParaGravacio = findViewById(R.id.btn_inici_para);  // Asegúrate de tener este ID en tu XML
-        reproduirParar = findViewById(R.id.btn_reproduir);  // Asegúrate de tener este ID en tu XML
-        sortir = findViewById(R.id.btn_sortir);  // Asegúrate de tener este ID en tu XML
+        iniParaGravacio = findViewById(R.id.btn_inici_para);
+        reproduirParar = findViewById(R.id.btn_reproduir);
+        sortir = findViewById(R.id.btn_sortir);
 
         // Acción para el botón de salir
         sortir.setOnClickListener(new View.OnClickListener() {
@@ -48,30 +42,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_reproducir  = findViewById(R.id.btn_reproduir);
-        btn_reproducir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(estaReproduint){
-                    btn_reproducir.setText("Pausar");
-                    reproduir();
-                } else{
-                    btn_reproducir.setText("Reproduir");
-                    pausar();
-                }
-            }
-        });
-
         // Acción para el botón de iniciar/parar grabación
         iniParaGravacio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (estaGravant) {
-                    // Detener la grabación si ya está en proceso
                     stopRecording();
+                    iniParaGravacio.setText("Iniciar Gravació");
                 } else {
-                    // Iniciar la grabación
                     comencarGravacio();
+                    iniParaGravacio.setText("Parar Gravació");
                 }
             }
         });
@@ -80,13 +60,15 @@ public class MainActivity extends AppCompatActivity {
         reproduirParar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mediaPlayer == null) {
+                    instanciarMediaplayer();
+                }
                 if (estaReproduint) {
                     pausar();
+                    reproduirParar.setText("Reproduir");
                 } else {
-                    if(mediaPlayer==null){
-                        instanciarMediaplayer();
-                    }
                     reproduir();
+                    reproduirParar.setText("Pausar");
                 }
             }
         });
@@ -135,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
                     estaReproduint = false;
+                    reproduirParar.setText("Reproduir");
                 }
             });
         }
