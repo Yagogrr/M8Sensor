@@ -44,7 +44,21 @@ public class MainActivity extends AppCompatActivity {
         sortir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAffinity();
+            }
+        });
+
+        Button btn_reproducir  = findViewById(R.id.btn_reproduir);
+        btn_reproducir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(estaReproduint){
+                    btn_reproducir.setText("Pausar");
+                    reproduir();
+                } else{
+                    btn_reproducir.setText("Reproduir");
+                    pausar();
+                }
             }
         });
 
