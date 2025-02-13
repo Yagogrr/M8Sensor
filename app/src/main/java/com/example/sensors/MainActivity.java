@@ -83,7 +83,9 @@ public class MainActivity extends AppCompatActivity {
                 if (estaReproduint) {
                     pausar();
                 } else {
-                    instanciarMediaplayer();
+                    if(mediaPlayer==null){
+                        instanciarMediaplayer();
+                    }
                     reproduir();
                 }
             }

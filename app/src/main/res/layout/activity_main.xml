@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@id/btn_inici_para"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:enabled="false"
+        android:enabled="true"
         android:text="@string/reproduir" />
     <Button
         android:id="@+id/btn_sortir"
