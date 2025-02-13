@@ -40,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@id/btn_reproduir"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:enabled="false"
+        android:enabled="true"
         android:text="@string/sortir" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
